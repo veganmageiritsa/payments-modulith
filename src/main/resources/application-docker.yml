@@ -1,0 +1,52 @@
+
+spring:
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled: true
+    contexts: development
+  datasource:
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:12345}
+    url: jdbc:postgresql://${MODULITH_HOST:localhost}:${MODULITH_PORT:5432}/${MODULITH_DB_NAME:payments}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    defer-datasource-initialization: false
+  sql:
+    init:
+      mode: never
+
+  modulith:
+    republish-outstanding-events-on-restart: false
+
+delete:
+  event:
+    duration: ${DELETE_EVENT_DURATION:5000}
+
+#
+#logging:
+#  level:
+#    org.springframework.modulith: DEBUG
+#    org.springframework.web: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${ACTUATOR_EXPOSED_ENDPOINTS:health}
+
+
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+
+server:
+  port: ${SERVER_PORT:8081}

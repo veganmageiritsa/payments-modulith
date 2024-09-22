@@ -1,0 +1,60 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+    min-response-size: 8
+    mime-types:
+      - application/json
+      - application/xml
+      - text/plain
+  error:
+    include-message: always
+    include-binding-errors: always
+spring:
+  modulith:
+    republish-outstanding-events-on-restart: true
+  threads:
+    virtual:
+      enabled: true
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled: true
+    contexts: development
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/payments}
+    username: postgres
+    password: 12345
+    hikari:
+      maximum-pool-size: 20
+      pool-name: SpringBootSchumacherJPAHikariCP
+      auto-commit: false
+      connection-timeout: 300000
+      max-lifetime: 1200000
+      isolate-internal-queries: true
+      data-source-properties:
+        reWriteBatchedInserts: true
+  jpa:
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format-sql: true
+        connection:
+          provider_disables_autocommit: true
+        generate_statistics: false
+        order_inserts: true
+        order_updates: true
+        batch_versioned_data: true
+        jdbc:
+          time_zone: UTC
+          batch_size: 200
+        format_sql: true
+        show_sql: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

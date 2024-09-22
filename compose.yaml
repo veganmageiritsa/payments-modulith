@@ -1,0 +1,38 @@
+services:
+  postgres-db:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=payments'
+      - 'POSTGRES_PASSWORD=12345'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - "5432:5432"
+    networks:
+      modulith-network:
+
+  payments-app-modulith:
+    platform: linux/arm64/v8
+    image: 'payments-modulith:0.0.1-SNAPSHOT'
+    environment:
+      SPRING_PROFILES_ACTIVE: "docker"
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "12345"
+      MODULITH_HOST: "postgres-db"
+      MODULITH_PORT: 5432
+      MODULITH_DB_NAME: "payments"
+      DELETE_EVENT_DURATION: 4000
+      ACTUATOR_EXPOSED_ENDPOINTS: "health, modulith"
+      SERVER_PORT: 8081
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres-db
+    networks:
+      modulith-network:
+    restart: unless-stopped
+
+volumes:
+  postgres:
+networks:
+  modulith-network:
+    driver: bridge

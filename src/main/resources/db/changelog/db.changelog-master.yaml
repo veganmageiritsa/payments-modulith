@@ -1,0 +1,74 @@
+databaseChangeLog:
+  - changeSet:
+      id: 01-changelog
+      author: Nikolas Leontiou
+      context: test, production, development
+      preConditions:
+        - onFail: HALT
+        - onError: HALT
+          not:
+            - tableExists:
+                - schemaName: payments
+                - tableName: inventory
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: db/changelog/scripts/01-payment-tables.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true
+
+#  - changeSet:
+#      id: 02-changelog
+#      author: Nikolas Leontiou
+#      context: test, production, development
+#      preConditions:
+#        - onFail: HALT
+#        - onError: HALT
+#          not:
+#            - tableExists:
+#               - schemaName: cards
+#               - tableName: cards
+#      changes:
+#        - sqlFile:
+#            encoding: utf8
+#            path: db/changelog/scripts/02-test-data.sql
+#            relativeToChangelogFile: false
+#            splitStatements: true
+#            stripComments: true
+  - changeSet:
+      id: 02-changelog
+      author: Nikolas Leontiou
+      context: test,development
+      preConditions:
+        - onFail: HALT
+        - onError: HALT
+        - sqlCheck:
+            expectedResult: 0
+            sql: SELECT COUNT(*) FROM inventory
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: db/changelog/scripts/02-test-data.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true
+
+  - changeSet:
+      id: 03-changelog
+      author: Nikolas Leontiou
+      context: test, production, development
+      preConditions:
+        - onFail: HALT
+        - onError: HALT
+          not:
+            - tableExists:
+               - schemaName: payments
+               - tableName: event_action
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: db/changelog/scripts/03-action-tables.sql
+            relativeToChangelogFile: false
+            splitStatements: true
+            stripComments: true
