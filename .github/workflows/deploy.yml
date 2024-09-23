@@ -35,5 +35,20 @@ jobs:
         with:
           maven-version: 3.8.2
 
+      - name: run maven test
+        env:
+          SPRING_PROFILES_ACTIVE: ${{ vars.SPRING_PROFILES_ACTIVE }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.MODULITH_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.MODULITH_PASSWORD }}
+          DELETE_EVENT_DURATION: 4000
+          ACTUATOR_EXPOSED_ENDPOINTS: ${{ vars.ACTUATOR_EXPOSED_ENDPOINTS }}
+          SERVER_PORT: ${{ vars.SERVER_PORT }}
+          MODULITH_USERNAME: ${{ secrets.MODULITH_USERNAME }}
+          MODULITH_PASSWORD: ${{ secrets.MODULITH_PASSWORD }}
+          MODULITH_HOST: ${{ vars.MODULITH_HOST }}
+          MODULITH_PORT: ${{ vars.MODULITH_PORT }}
+          MODULITH_DB_NAME: ${{ vars.MODULITH_DB_NAME }}
+        run: mvn clean test
+
       - name: Build with Maven
         run: mvn clean package -Dspring-boot.run.profiles=${{ vars.SPRING_PROFILES_ACTIVE }}
