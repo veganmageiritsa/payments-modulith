@@ -8,6 +8,18 @@ jobs:
   build-section:
     environment: action
     runs-on: ubuntu-latest
+
+    container: postgresDb
+    services:
+      postgresDb:
+        image: 'postgres:latest'
+        env:
+          POSTGRES_DB: ${{ vars.MODULITH_DB_NAME }}
+          POSTGRES_PASSWORD: ${{ secrets.MODULITH_PASSWORD }}
+          POSTGRES_USER: ${{ secrets.MODULITH_USERNAME }}
+        ports:
+          - 5432:5432
+
     steps:
       - name: Pull Code
         uses: actions/checkout@v4
@@ -18,4 +30,4 @@ jobs:
           java-version: '21'
           cache: maven
       - name: Build with Maven
-        run: mvn clean package -DskipTests -Dspring-boot.run.profiles=${{ vars.SPRING_PROFILES_ACTIVE }}
+        run: mvn clean package -Dspring-boot.run.profiles=${{ vars.SPRING_PROFILES_ACTIVE }}

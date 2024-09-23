@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.modulith.test.ApplicationModuleTest;
 import org.springframework.modulith.test.Scenario;
+import org.springframework.test.context.ActiveProfiles;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +15,11 @@ import com.nl.paymentsmodulith.orders.application.OrderManagement;
 import com.nl.paymentsmodulith.orders.domain.events.OrderPaymentEvent;
 import com.nl.paymentsmodulith.orders.infrastucture.web.model.InventoryRequestDto;
 import com.nl.paymentsmodulith.orders.infrastucture.web.model.OrderDto;
-import com.nl.paymentsmodulith.orders.infrastucture.web.model.OrderResponseDto;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ApplicationModuleTest(mode = ApplicationModuleTest.BootstrapMode.DIRECT_DEPENDENCIES)
+@ActiveProfiles(value = "test")
 class OrderIntegrationTest extends ContainerIntegrationTest {
     
     @Autowired

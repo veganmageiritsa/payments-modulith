@@ -2,7 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 01-changelog
       author: Nikolas Leontiou
-      context: test, production, development
+      context: test, production, development, action, docker
       preConditions:
         - onFail: HALT
         - onError: HALT
@@ -57,7 +57,7 @@ databaseChangeLog:
   - changeSet:
       id: 03-changelog
       author: Nikolas Leontiou
-      context: test, production, development
+      context: test, production, development, action, docker
       preConditions:
         - onFail: HALT
         - onError: HALT
