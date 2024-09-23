@@ -59,7 +59,7 @@ jobs:
           name: payments-modulith-artifact
           path: |
             target/payments-modulith-0.0.1-SNAPSHOT.jar
-          #            Dockerfile
+            Dockerfile_1
           overwrite: 'true'
           retention-days: 5
 
@@ -79,3 +79,12 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: push image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/modulith:1.0
+          context: .
+          file: ./Dockerfile_1
+          builder: ${{ steps.buildx.outputs.name }}
