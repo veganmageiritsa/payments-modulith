@@ -1,5 +1,5 @@
 services:
-  postgres_db:
+  postgres:
     image: 'postgres:latest'
     environment:
       - 'POSTGRES_DB=payments'
@@ -17,7 +17,7 @@ services:
       SPRING_PROFILES_ACTIVE: "docker"
       SPRING_DATASOURCE_USERNAME: "postgres"
       SPRING_DATASOURCE_PASSWORD: "12345"
-      MODULITH_HOST: "postgres_db"
+      MODULITH_HOST: "postgres"
       MODULITH_PORT: 5432
       MODULITH_DB_NAME: "payments"
       DELETE_EVENT_DURATION: 4000
@@ -26,7 +26,7 @@ services:
     ports:
       - "8081:8081"
     depends_on:
-      - postgres_db
+      - postgres
     networks:
       modulith-network:
     restart: unless-stopped

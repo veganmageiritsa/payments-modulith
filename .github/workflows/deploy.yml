@@ -9,9 +9,9 @@ jobs:
     environment: action
     runs-on: ubuntu-latest
 
-    container: postgres_db
+    container: postgres
     services:
-      postgres_db:
+      postgres:
         image: 'postgres:latest'
         env:
           POSTGRES_DB: ${{ vars.MODULITH_DB_NAME }}
