@@ -84,7 +84,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/modulith:1.0
+          tags: ${{ secrets.DOCKER_USERNAME }}/modulith-payments
           context: .
           file: ./Dockerfile_1
           builder: ${{ steps.buildx.outputs.name }}
